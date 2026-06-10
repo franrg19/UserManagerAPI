@@ -26,6 +26,58 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+//Endpoint para obtener la lista de usuarios (simulado con datos vacíos por ahora)
+app.get("/api/users", (req, res) => {
+  res.status(200).json({
+    message: "Lista de usuarios",
+    data: []
+  });
+});
+
+// Endpoint para obtener el detalle de un usuario por su ID (simulado con datos vacíos por ahora)
+app.get("/api/users/:id", (req, res) => {
+  const {id} = req.params;
+
+  res.status(200).json({
+    message: "Detalle del usuario",
+    id: id
+  });
+});
+
+
+// Endpoint para crear un nuevo usuario (simulado, no se guarda realmente)
+app.post("/api/users", (req, res) => {
+  const userData = req.body;
+
+  res.status(201).json({
+    message:"Usuario recibido para crear",
+    data: userData
+  });
+});
+
+
+// Endpoint para actualizar un usuario existente por su ID (simulado, no se actualiza realmente)
+app.patch("/api/users/:id", (req, res) => {
+  const {id} = req.params;
+  const changes = req.body;
+
+  res.status(200).json({
+    message:"usuario recibido para actualizar",
+    id:id,
+    changes: changes
+  });
+});
+
+// Endpoint para eliminar un usuario por su ID (simulado, no se elimina realmente)
+app.delete("/api/users/:id", (req, res) => {
+  const {id} = req.params;
+
+  res.status(200).json({
+    message:"usuario recibido para eliminar",
+    id:id
+  });
+});
+  
 
 // Endpoint para ver la información de la API
 app.get("/api/info", (req, res) => {
@@ -42,6 +94,8 @@ app.get("/api/ping", (req, res) => {
   res.json({
     message: "pong, pong",});
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
