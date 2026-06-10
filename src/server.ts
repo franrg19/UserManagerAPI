@@ -34,6 +34,20 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+// Endpoint para obtener la información del usuario actual (simulado con datos de ejemplo por ahora)
+app.get("/api/users/me", (req, res) => {
+  res.status(200).json({
+    message: "Información del usuario actual",
+    data: {
+      name: "Usuario de ejemplo",
+      email: "demo@email.com",
+      role: "admin",
+      isActive: true
+    }
+  });
+});
+
+
 // Endpoint para obtener el detalle de un usuario por su ID (simulado con datos vacíos por ahora)
 app.get("/api/users/:id", (req, res) => {
   const {id} = req.params;
@@ -68,6 +82,18 @@ app.patch("/api/users/:id", (req, res) => {
   });
 });
 
+
+app.patch("/api/users/:id/status", (req, res) => {
+  const {id} = req.params;
+  const {isActive} = req.body;
+
+  res.status(200).json({
+    message:"Estado del usuario actualizado",
+    id:id,
+    isActive: isActive
+  });
+});
+
 // Endpoint para eliminar un usuario por su ID (simulado, no se elimina realmente)
 app.delete("/api/users/:id", (req, res) => {
   const {id} = req.params;
@@ -77,7 +103,8 @@ app.delete("/api/users/:id", (req, res) => {
     id:id
   });
 });
-  
+
+
 
 // Endpoint para ver la información de la API
 app.get("/api/info", (req, res) => {
