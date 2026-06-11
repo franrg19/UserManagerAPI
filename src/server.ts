@@ -5,6 +5,38 @@ const PORT = 3000;
 
 app.use(express.json());
 
+
+app.post("/api/debug/body", (req, res) => {
+  res.status(200).json({
+    message: "Body recibido correctamente",
+    body: req.body
+  });
+});
+
+
+app.get("/api/debug/params/:id", (req, res) => {
+  res.status(200).json({
+    message: "Params recibidos correctamente",
+    params: req.params
+  });
+});
+
+
+app.patch("/api/debug/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { notify } = req.query;
+  const authorization = req.headers.authorization;
+  const changes = req.body;
+
+  res.status(200).json({
+    message: "Datos combinados recibidos",
+    id,
+    notify,
+    authorization,
+    changes
+  });
+});
+
 // Endpoint raíz para mostrar información básica de la API
 app.get("/", (req, res) => {
   res.json({
