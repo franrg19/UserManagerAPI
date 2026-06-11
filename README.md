@@ -118,4 +118,4 @@ Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API f
 - [Día 2 - Preparación del proyecto](Docs/dia-02-dia-2-preparacion-proyecto.md) 
 - [Día 3 - Primer Endpoint](Docs/dia-03-primer-endpoint.md)
 - [Día 4 - Metodos HTTP](Docs/dia-04-metodos-http.md)
-- [Día 5 - Metodos HTTP](Docs/dia-05-json-body-params-headers.md)
+- [Día 5 - JSON, body, params y headers](Docs/dia-05-json-body-params-headers.md)
