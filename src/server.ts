@@ -41,6 +41,24 @@ const users: User[] = [
     isActive: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: 4,
+    name: "fran rebollo",
+    email: "fran@email.com",
+    role: "USER",
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 5,
+    name: "Laura Granados",
+    email: "laura@email.com",
+    role: "USER",
+    isActive: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -136,6 +154,12 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+app.get("/api/users/count", (req, res) => {
+  res.status(200).json({
+    message: "Recuento de usuarios",
+    total: users.length
+  });
+});
 
 // Endpoint para obtener la información del usuario actual (simulado con datos de ejemplo por ahora)
 app.get("/api/users/me", (req, res) => {
