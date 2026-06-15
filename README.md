@@ -98,6 +98,25 @@ DELETE /api/users/:id
 Estos endpoints todavía no trabajan con datos reales. De momento sirven para
 practicar métodos HTTP, rutas, parámetros y body.
 
+
+## Endpoints de usuarios
+
+```http
+GET /api/users
+```
+
+Devuelve el listado de usuarios cargados en memoria.
+
+Respuesta de ejemplo:
+
+```json
+{
+  "message": "Listado de usuarios",
+  "total": 3,
+  "data": []
+}
+```
+
 ## Rutas temporales de debug
 
 Estas rutas se han creado para practicar cómo leer datos de una petición HTTP.
@@ -120,3 +139,4 @@ Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API f
 - [Día 4 - Metodos HTTP](Docs/dia-04-metodos-http.md)
 - [Día 5 - JSON, body, params y headers](Docs/dia-05-json-body-params-headers.md)
 - [Día 6 - Cliente HTTP y depuracion ](Docs/dia-06-cliente-depuracion.md)
+- [Día 7 - Listado de usuarios en memoria ](Docs/dia-07-listado-usuarios.md)

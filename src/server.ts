@@ -3,7 +3,56 @@ import express from "express";
 const app = express();
 const PORT = 3000;
 
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  role: "USER" | "ADMIN";
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+// Datos temporales en memoria. Más adelante se sustituirán por una base de datos.
+const users: User[] = [
+  {
+    id: 1,
+    name: "Ana García",
+    email: "ana@email.com",
+    role: "USER",
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 2,
+    name: "Carlos Pérez",
+    email: "carlos@email.com",
+    role: "ADMIN",
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 3,
+    name: "Laura Martínez",
+    email: "laura@email.com",
+    role: "USER",
+    isActive: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+];
+
+
+
+
+
 app.use(express.json());
+
+
+
+//**RUTAS DEBUG */
 
 // Endpoint para probar la recepción de body en la API
 app.post("/api/debug/body", (req, res) => {
@@ -37,7 +86,6 @@ app.get("/api/debug/headers", (req, res) => {
   });
 });
 
-
 // Endpoint para probar la recepción de body, params, query y headers en la API
 app.patch("/api/debug/users/:id", (req, res) => { 
   const { id } = req.params;
@@ -53,6 +101,9 @@ app.patch("/api/debug/users/:id", (req, res) => {
     changes
   });
 });
+
+
+
 
 // Endpoint raíz para mostrar información básica de la API
 app.get("/", (req, res) => {
@@ -75,13 +126,16 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+
 //Endpoint para obtener la lista de usuarios (simulado con datos vacíos por ahora)
 app.get("/api/users", (req, res) => {
   res.status(200).json({
     message: "Lista de usuarios",
-    data: []
+    total: users.length,
+    data: users
   });
 });
+
 
 // Endpoint para obtener la información del usuario actual (simulado con datos de ejemplo por ahora)
 app.get("/api/users/me", (req, res) => {
