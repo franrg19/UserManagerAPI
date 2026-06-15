@@ -5,7 +5,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
-
+// Endpoint para probar la recepción de body en la API
 app.post("/api/debug/body", (req, res) => {
   res.status(200).json({
     message: "Body recibido correctamente",
@@ -13,7 +13,7 @@ app.post("/api/debug/body", (req, res) => {
   });
 });
 
-
+// Endpoint para probar la recepción de params en la API
 app.get("/api/debug/params/:id", (req, res) => {
   res.status(200).json({
     message: "Params recibidos correctamente",
@@ -21,8 +21,25 @@ app.get("/api/debug/params/:id", (req, res) => {
   });
 });
 
+// Endpoint para probar la recepción de query params en la API
+app.get("/api/debug/query", (req, res) => {
+  res.status(200).json({
+    message: "Query params recibidos correctamente",
+    query: req.query
+  });
+});
 
-app.patch("/api/debug/users/:id", (req, res) => {
+// Endpoint para probar la recepción de headers en la API
+app.get("/api/debug/headers", (req, res) => {
+  res.status(200).json({
+    message: "Headers recibidos correctamente",
+    headers: req.headers
+  });
+});
+
+
+// Endpoint para probar la recepción de body, params, query y headers en la API
+app.patch("/api/debug/users/:id", (req, res) => { 
   const { id } = req.params;
   const { notify } = req.query;
   const authorization = req.headers.authorization;
