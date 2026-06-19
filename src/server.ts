@@ -64,8 +64,6 @@ const users: User[] = [
 
 
 
-
-
 app.use(express.json());
 
 
@@ -177,12 +175,24 @@ app.get("/api/users/me", (req, res) => {
 
 // Endpoint para obtener el detalle de un usuario por su ID (simulado con datos vacíos por ahora)
 app.get("/api/users/:id", (req, res) => {
-  const {id} = req.params;
+  const id = Number(req.params.id);
 
+  if(Number.isNaN(id)) {
+    return res.status(400).json({
+      error: "El Id debe ser un numero"
+    });
+  }
+  const user= users.find((user) => user.id === id);
+  if(!user) {
+    return res.status(404).json({
+      error: "Usuario no encontrado"
+    });
+  }
   res.status(200).json({
-    message: "Detalle del usuario",
-    id: id
+    message:"Usuario encontrado",
+    data: user
   });
+  
 });
 
 

@@ -103,17 +103,39 @@ practicar métodos HTTP, rutas, parámetros y body.
 
 ```http
 GET /api/users
+GET /api/users/:id
 ```
 
-Devuelve el listado de usuarios cargados en memoria.
+### GET /api/users/:id
 
-Respuesta de ejemplo:
+Devuelve un usuario concreto a partir de su ID.
+
+Respuesta correcta:
 
 ```json
 {
-  "message": "Listado de usuarios",
-  "total": 3,
-  "data": []
+  "message": "Usuario encontrado",
+  "data": {
+    "id": 1,
+    "name": "Ana García",
+    "email": "ana@email.com",
+    "role": "USER",
+    "isActive": true
+  }
+}
+```
+
+Posibles errores:
+
+```json
+{
+  "error": "El ID debe ser un número"
+}
+```
+
+```json
+{
+  "error": "Usuario no encontrado"
 }
 ```
 
@@ -140,3 +162,4 @@ Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API f
 - [Día 5 - JSON, body, params y headers](Docs/dia-05-json-body-params-headers.md)
 - [Día 6 - Cliente HTTP y depuracion ](Docs/dia-06-cliente-depuracion.md)
 - [Día 7 - Listado de usuarios en memoria ](Docs/dia-07-listado-usuarios.md)
+- [Día 7 - Consultar usuario por ID ](Docs/dia-08-consultar-usuario-id.md)
