@@ -172,20 +172,34 @@ app.get("/api/users/me", (req, res) => {
   });
 });
 
+app.get("/api/users/active", (req, res) => {
+  const activeUsers = users.filter((user) => user.isActive);
+  res.status(200).json({
+    message: "Lista de usuarios activos",
+    total: activeUsers.length,
+    data: activeUsers
+  });
+});
 
-// Endpoint para obtener el detalle de un usuario por su ID (simulado con datos vacíos por ahora)
+
+
+
+
+// Endpoint para obtener la información de un usuario por su ID (simulado con datos de ejemplo por ahora)
 app.get("/api/users/:id", (req, res) => {
   const id = Number(req.params.id);
 
   if(Number.isNaN(id)) {
     return res.status(400).json({
-      error: "El Id debe ser un numero"
+      error: "El Id debe ser un numero",
+      receivedId: req.params.id
     });
   }
   const user= users.find((user) => user.id === id);
   if(!user) {
     return res.status(404).json({
-      error: "Usuario no encontrado"
+      error: "Usuario no encontrado",
+      id:id
     });
   }
   res.status(200).json({

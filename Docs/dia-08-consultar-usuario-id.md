@@ -29,3 +29,7 @@ GET /api/users/:id
 
 El parámetro `:id` se recibe desde `req.params`. Como llega en formato string,
 hay que convertirlo a number antes de compararlo con los id de los usuarios.
+
+## Orden de rutas en Express
+
+Las rutas `/api/users/count` y `/api/users/active` deben de estar situadas antes que cualquier ruta con parametro variable del tipo `api/users/:id` ya que en caso contrario express puede interpretar `count` o `active` como parámetro `ID`
