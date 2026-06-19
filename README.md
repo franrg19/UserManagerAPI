@@ -99,6 +99,58 @@ Estos endpoints todavía no trabajan con datos reales. De momento sirven para
 practicar métodos HTTP, rutas, parámetros y body.
 
 
+## Crear usuario
+
+```http
+POST /api/users
+```
+
+Body:
+
+```json
+{
+  "name": "María López",
+  "email": "maria@email.com",
+  "password": "123456"
+}
+```
+
+Respuesta correcta:
+
+```json
+{
+  "message": "Usuario creado correctamente",
+  "data": {
+    "id": 4,
+    "name": "María López",
+    "email": "maria@email.com",
+    "role": "USER",
+    "isActive": true
+  }
+}
+```
+
+Posibles errores:
+
+```json
+{
+  "error": "name, email y password son obligatorios"
+}
+```
+
+```json
+{
+  "error": "La contraseña debe tener al menos 6 caracteres"
+}
+```
+
+```json
+{
+  "error": "El email ya está registrado"
+}
+```
+
+
 ## Endpoints de usuarios
 
 ```http
@@ -162,4 +214,5 @@ Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API f
 - [Día 5 - JSON, body, params y headers](Docs/dia-05-json-body-params-headers.md)
 - [Día 6 - Cliente HTTP y depuracion ](Docs/dia-06-cliente-depuracion.md)
 - [Día 7 - Listado de usuarios en memoria ](Docs/dia-07-listado-usuarios.md)
-- [Día 7 - Consultar usuario por ID ](Docs/dia-08-consultar-usuario-id.md)
+- [Día 8 - Consultar usuario por ID ](Docs/dia-08-consultar-usuario-id.md)
+- [Día 9 - Crear usuarios en memoria ](Docs/dia-09-crear-usuarios.md)
