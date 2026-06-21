@@ -351,7 +351,7 @@ app.patch("/api/users/:id", (req, res) => {
 
 
 
-
+// Endpoint para actualizar el estado de un usuario por su ID (simulado, no se actualiza realmente)
 app.patch("/api/users/:id/status", (req, res) => {
   const {id} = req.params;
   const {isActive} = req.body;
@@ -365,12 +365,39 @@ app.patch("/api/users/:id/status", (req, res) => {
 
 // Endpoint para eliminar un usuario por su ID (simulado, no se elimina realmente)
 app.delete("/api/users/:id", (req, res) => {
-  const {id} = req.params;
+  const idParam = req.params.id;
+  const id = Number(idParam);
 
-  res.status(200).json({
-    message:"usuario recibido para eliminar",
-    id:id
-  });
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      error: "El ID debe ser un número",
+      received: idParam
+    });
+  }
+
+  const userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      error: "Usuario no encontrado",
+      id
+    });
+  }
+
+  const currentUser = users[userIndex];
+
+  const updatedUser: User = {
+    ...currentUser,
+    isActive: false,
+    updatedAt: new Date().toISOString()
+  };
+
+  users[userIndex] = updatedUser;
+
+  return res.status(200).json({
+  message: "Usuario desactivado correctamente",
+  data: updatedUser
+});
 });
 
 
