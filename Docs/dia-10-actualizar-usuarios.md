@@ -45,3 +45,16 @@ PATCH /api/users/:id
 Para actualizar un usuario se lee el ID desde `req.params`, se busca el usuario
 en el array, se leen los cambios desde `req.body` y se sustituyen solo los
 campos que han llegado en la petición.
+
+## Explicacion personal PATCH
+### ¿Que significa actualizar parcialmente?
+Actualizar parcialmente significa modificar solo los datos que queremos cambiar, 
+sin tener que enviar toda la información del objeto
+
+### ¿Qué diferencia hay entre enviar solo `name` y enviar todo el usuario?
+Si enviamos solo name, únicamente se actualiza el nombre del usuario y el resto de 
+los campos (como el correo, la contraseña o el rol) no se modifican.
+
+### ¿Por qué no permitimos modificar campos como id o role desde esta ruta?
+Porque son campos sensibles. El id identifica de forma única al usuario y no debe cambiarse,
+ya que podría provocar problemas en la base de datos. El role determina los permisos del usuario
