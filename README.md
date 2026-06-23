@@ -349,3 +349,4 @@ Ejemplo de error:
 - [Día 9 - Crear usuarios en memoria ](Docs/dia-09-crear-usuarios.md)
 - [Día 10 - Actualizar usuarios ](Docs/dia-10-actualizar-usuarios.md)
 - [Día 11 - Eliminar o desactivar un usuario ](Docs/dia-11-eliminar-desactivar-usuario.md)
+- [Día 12 - Validaciones manuales básicas ](Docs/dia-12-validacion-manual-basica.md)
