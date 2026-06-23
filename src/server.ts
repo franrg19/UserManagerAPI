@@ -74,6 +74,22 @@ function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean";
 }
 
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+function isValidBasicEmail(value: string): boolean {
+  return value.includes("@") && value.includes(".");
+}
+
+function isEmailTaken(email: string, userIdToIgnore?: number): boolean {
+  const normalizedEmail = normalizeEmail(email);
+
+  return users.some(
+    (user) => user.email === normalizedEmail && user.id !== userIdToIgnore
+  );
+}
+
 
 //**RUTAS DEBUG */
 
@@ -240,7 +256,7 @@ if (!isNonEmptyString(password)) {
 }
 
 const cleanName = name.trim();
-const cleanEmail = email.trim().toLowerCase();
+const cleanEmail = normalizeEmail(email);
 const cleanPassword = password.trim();
 
   if (cleanPassword.length < 6) {
@@ -248,15 +264,13 @@ const cleanPassword = password.trim();
     error: "La contraseña debe tener al menos 6 caracteres"
   });
 }
-if (!cleanEmail.includes("@")) {
+if (!isValidBasicEmail(cleanEmail)) {
   return res.status(400).json({
     error: "El email no tiene un formato válido"
   });
 }
 
-  const existingUser = users.find((user) => user.email === cleanEmail);
-
-if (existingUser) {
+  if (isEmailTaken(cleanEmail)) {
   return res.status(409).json({
     error: "El email ya está registrado"
   });
@@ -340,23 +354,23 @@ if (email !== undefined) {
     });
   }
 
-  cleanEmail = email.trim().toLowerCase();
+  cleanEmail = normalizeEmail(email);
 
-  if (!cleanEmail.includes("@")) {
-    return res.status(400).json({
-      error: "El email no tiene un formato válido"
-    });
-  }
+  if (!isValidBasicEmail(cleanEmail)) {
+  return res.status(400).json({
+    error: "El email no tiene un formato válido"
+  });
+}
 
   const emailAlreadyExists = users.some(
-    (user) => user.email === cleanEmail && user.id !== id
-  );
+  (user) => user.email === cleanEmail && user.id !== id
+);
 
-  if (emailAlreadyExists) {
-    return res.status(409).json({
-      error: "El email ya está registrado"
-    });
-  }
+if (emailAlreadyExists) {
+  return res.status(409).json({
+    error: "El email ya está registrado"
+  });
+}
 }
 
   if (isActive !== undefined && !isBoolean(isActive)) {
