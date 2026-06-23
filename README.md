@@ -315,6 +315,27 @@ PATCH /api/debug/users/:id
 
 Más adelante estas rutas podrán eliminarse, ya que no forman parte de la API final.
 
+## Validaciones básicas
+
+La API realiza validaciones manuales antes de crear o actualizar usuarios.
+
+Validaciones principales:
+
+- `name` debe ser un texto no vacío.
+- `email` debe ser un texto no vacío.
+- `password` debe ser un texto no vacío.
+- `password` debe tener al menos 6 caracteres.
+- `email` debe contener `@`.
+- `isActive` debe ser boolean.
+
+Ejemplo de error:
+
+```json
+{
+  "error": "El nombre debe ser un texto no vacío"
+}
+```
+
 ## Documentación del reto
 
 - [Día 1 - Diseño inicial](Docs/dia-01--diseno-inicial-usermanager.md)

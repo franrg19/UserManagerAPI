@@ -62,10 +62,17 @@ const users: User[] = [
   }
 ];
 
-
-
 app.use(express.json());
 
+
+// funciones auxiliares para validar datos de usuario
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function isBoolean(value: unknown): value is boolean {
+  return typeof value === "boolean";
+}
 
 
 //**RUTAS DEBUG */
@@ -214,39 +221,60 @@ app.get("/api/users/:id", (req, res) => {
 app.post("/api/users", (req, res) => {
   const { name, email, password } = req.body;
 
-  if (!name || !email || !password) {
-    return res.status(400).json({
-      error: "name, email y password son obligatorios"
-    });
-  }
+  if (!isNonEmptyString(name)) {
+  return res.status(400).json({
+    error: "El nombre debe ser un texto no vacío"
+  });
+}
 
-  if (password.length < 6) {
-    return res.status(400).json({
-      error: "La contraseña debe tener al menos 6 caracteres"
-    });
-  }
+if (!isNonEmptyString(email)) {
+  return res.status(400).json({
+    error: "El email debe ser un texto no vacío"
+  });
+}
 
-  const existingUser = users.find((user) => user.email === email);
+if (!isNonEmptyString(password)) {
+  return res.status(400).json({
+    error: "La contraseña debe ser un texto no vacío"
+  });
+}
 
-  if (existingUser) {
-    return res.status(409).json({
-      error: "El email ya está registrado"
-    });
-  }
+const cleanName = name.trim();
+const cleanEmail = email.trim().toLowerCase();
+const cleanPassword = password.trim();
+
+  if (cleanPassword.length < 6) {
+  return res.status(400).json({
+    error: "La contraseña debe tener al menos 6 caracteres"
+  });
+}
+if (!cleanEmail.includes("@")) {
+  return res.status(400).json({
+    error: "El email no tiene un formato válido"
+  });
+}
+
+  const existingUser = users.find((user) => user.email === cleanEmail);
+
+if (existingUser) {
+  return res.status(409).json({
+    error: "El email ya está registrado"
+  });
+}
 
   const newId = users.length > 0
     ? Math.max(...users.map((user) => user.id)) + 1
     : 1;
 
   const newUser: User = {
-    id: newId,
-    name,
-    email,
-    role: "USER",
-    isActive: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
+  id: newId,
+  name: cleanName,
+  email: cleanEmail,
+  role: "USER",
+  isActive: true,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString()
+};
 
   users.push(newUser);
 
@@ -293,43 +321,49 @@ app.patch("/api/users/:id", (req, res) => {
 
   let cleanName: string | undefined;
 
-  if (name !== undefined) {
-    cleanName = String(name).trim();
-
-    if (cleanName.length === 0) {
-      return res.status(400).json({
-        error: "El nombre no puede estar vacío"
-      });
-    }
+if (name !== undefined) {
+  if (!isNonEmptyString(name)) {
+    return res.status(400).json({
+      error: "El nombre debe ser un texto no vacío"
+    });
   }
+
+  cleanName = name.trim();
+}
 
   let cleanEmail: string | undefined;
 
-  if (email !== undefined) {
-    cleanEmail = String(email).trim().toLowerCase();
-
-    if (!cleanEmail.includes("@")) {
-      return res.status(400).json({
-        error: "El email no tiene un formato válido"
-      });
-    }
-
-    const emailAlreadyExists = users.some(
-      (user) => user.email === cleanEmail && user.id !== id
-    );
-
-    if (emailAlreadyExists) {
-      return res.status(409).json({
-        error: "El email ya está registrado"
-      });
-    }
-  }
-
-  if (isActive !== undefined && typeof isActive !== "boolean") {
+if (email !== undefined) {
+  if (!isNonEmptyString(email)) {
     return res.status(400).json({
-      error: "isActive debe ser true o false"
+      error: "El email debe ser un texto no vacío"
     });
   }
+
+  cleanEmail = email.trim().toLowerCase();
+
+  if (!cleanEmail.includes("@")) {
+    return res.status(400).json({
+      error: "El email no tiene un formato válido"
+    });
+  }
+
+  const emailAlreadyExists = users.some(
+    (user) => user.email === cleanEmail && user.id !== id
+  );
+
+  if (emailAlreadyExists) {
+    return res.status(409).json({
+      error: "El email ya está registrado"
+    });
+  }
+}
+
+  if (isActive !== undefined && !isBoolean(isActive)) {
+  return res.status(400).json({
+    error: "isActive debe ser true o false"
+  });
+}
 
   const currentUser = users[userIndex];
 
