@@ -41,3 +41,31 @@
 Los códigos de estado HTTP permiten que el cliente entienda rápidamente qué ha
 pasado con una petición. No basta con devolver un JSON; el código HTTP también
 debe ser coherente con el resultado.
+
+## ¿Cómo decido qué código usar?
+
+| Situación | Código HTTP | Motivo |
+|-----------|-------------|--------|
+| Usuario creado correctamente | **201 Created** | Se ha creado un nuevo recurso correctamente. |
+| Usuario no encontrado | **404 Not Found** | El usuario solicitado no existe. |
+| ID no numérico | **400 Bad Request** | El cliente ha enviado un dato con un formato incorrecto. |
+| Email duplicado | **409 Conflict** | El email ya está siendo utilizado por otro usuario. |
+| Falta un campo obligatorio | **400 Bad Request** | La petición está incompleta o contiene datos inválidos. |
+| Usuario actualizado correctamente | **200 OK** | El usuario se ha actualizado correctamente. |
+
+
+## Diferencia entre 400, 404 y 409
+
+- **400 Bad Request** → La petición está mal hecha o faltan datos.
+- **404 Not Found** → El recurso o usuario que buscas no existe.
+- **409 Conflict** → La petición es correcta, pero entra en conflicto con datos que ya existen, como un email registrado.
+
+## Diferencia entre 401 Unauthorized y 403 Forbidden
+
+- **401 Unauthorized** → No has iniciado sesión o no has enviado unas credenciales válidas. Primero debes autenticarte.
+- **403 Forbidden** → Sí estás identificado, pero no tienes permiso para realizar esa acción.
+
+### Ejemplo
+- **401 Unauthorized:** Intentas acceder a una API sin enviar el token de acceso.
+- **403 Forbidden:** Entras con tu cuenta, pero intentas acceder a una zona reservada solo para administradores.
+
